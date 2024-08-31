@@ -12,3 +12,8 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Status {
+  id Int @id @default(autoincrement())
+  message String
+}

@@ -1,7 +1,7 @@
 import { InputType, Int, Field } from "@nestjs/graphql";
 
 @InputType()
-export class CreateStatusInput {
+export class CreateStatusDto {
   @Field(() => String)
   message: string;
 }

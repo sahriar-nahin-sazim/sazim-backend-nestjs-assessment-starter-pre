@@ -1,17 +1,29 @@
 import { Injectable } from "@nestjs/common";
-import { CreateStatusInput } from "./dto/create-status.input";
+import { CreateStatusDto } from "./dto/create-status.dtos";
+import { PrismaService } from "src/prisma/prisma.service";
+import { STATUS_MESSAGE } from "./status.constants";
 
 @Injectable()
 export class StatusService {
-  create(createStatusInput: CreateStatusInput) {
-    return "This action adds a new status";
+  constructor(private readonly prismaService: PrismaService) {}
+
+  status() {
+    return STATUS_MESSAGE;
+  }
+
+  create(createStatusInput: CreateStatusDto) {
+    return this.prismaService.status.create({
+      data: {
+        message: createStatusInput.message,
+      },
+    });
   }
 
   findAll() {
-    return `This action returns all status`;
+    return this.prismaService.status.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} status`;
+    return this.prismaService.status.findUnique({ where: { id } });
   }
 }
