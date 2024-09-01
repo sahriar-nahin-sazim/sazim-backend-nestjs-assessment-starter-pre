@@ -2,7 +2,7 @@
 
 ## Description
 
-Welcome to Sazim. Here is a stater code for backend assessment with [NestJS](https://github.com/nestjs/nest)-GraphQL, [Prisma](https://www.prisma.io/) with the power of [Typescript](https://www.typescriptlang.org/).
+Welcome to the Sazim backend assessment starter code. This starter project [NestJS](https://github.com/nestjs/nest)-GraphQL, [Prisma](https://www.prisma.io/) with the power of [Typescript](https://www.typescriptlang.org/). The following steps should get anyone up and running with the project:
 
 ### 1. **Clone the repository**
 ```bash
@@ -10,32 +10,32 @@ git clone https://github.com/SazimAssessments/sazim-backend-nestjs-assessment-st
 ```
 ### 2. **Project setup** 
 
-Make sure you have `yarn` installed. And you might want to ensure at lease Node `version 20` is active. You can ensure that if you have `nvm` via following command. 
+Make sure you have `yarn` installed and you are using at lease Node `version 20`.  If you have nvm installed, you can activate the correct Node version with the following command: 
 ```
 nvm use
 ```
 
-Then install the dependencies.
+Next, install the dependencies.
 
 ```bash
 yarn install
 ```
 
 ### 3. **Environment Variables**
- The `DATABASE_URL` variable for Prisma setup is taken from environment variable. So you will need 
+ The `DATABASE_URL` variable for Prisma setup is taken from environment variable. So you will need the following files:
     - `.env`/`.env.local`/`.env.development.local` file for development
     - `env.test.local` for testing
 
-    [`.env.example`](.env.example) file is has the example values as a guideline. 
+    You can refer to [`.env.example`](.env.example) file for example values. 
     
-**NOTE**: The [`.env.example`](.env.example)  and [`schema.prisma`](prisma/schema.prisma) has [Postgresql](https://www.postgresql.org/) setup. For other database, both files will require appropriate update.
+**NOTE**: The [`.env.example`](.env.example)  and [`schema.prisma`](prisma/schema.prisma) are configured for [Postgresql](https://www.postgresql.org/).  If you're using a different database, you'll need to update both files accordingly.
 
 ### 4. **Setup database**
 
-Once `DATABASE_URL` is setup in the .env, run the following commands:
+Once `DATABASE_URL` setup is done in the .env, run the following commands:
 ```bash
-yarn run db:generate:client # or => npx prisma generate
-yarn run db:push:dev # or => prisma db push
+yarn run db:generate:client # or, # npx prisma generate
+yarn run db:push:dev # or, # prisma db push
 yarn run db:push:test 
 ```
 
@@ -50,6 +50,8 @@ yarn run test:e2e
 
 ### 6. **Compile and run the project**
 
+To start the project, use one of the following commands:
+
 ```bash
 # development
 yarn run start
@@ -58,12 +60,12 @@ yarn run start
 yarn run start:dev
 ```
 
-This should have GraphQl playground running at `http://localhost:<<PORT>>/graphql`. (For `PORT=3000` it should be running at [link](http://localhost:3000/graphql))
+This will have GraphQl playground running at `http://localhost:<<PORT>>/graphql`. (For `PORT=3000` it should be running at http://localhost:3000/graphql)
 
-- You can test with 
+- You can test endpoint with following query
 
 ```bash
-# query
+# Query
 {status}
 
 # response after execution
@@ -73,7 +75,9 @@ This should have GraphQl playground running at `http://localhost:<<PORT>>/graphq
   }
 }
 ```
-- And running the mutation
+
+- And to ensure database is setup properly with the following mutation:
+
 ```bash
 mutation CreateStatus($createStatusDto: CreateStatusDto!) {
   createStatus(createStatusDto: $createStatusDto) {
@@ -92,7 +96,7 @@ mutation CreateStatus($createStatusDto: CreateStatusDto!) {
 {
   "data": {
     "createStatus": {
-      "id": 3,
+      "id": 1,
       "message": "Hello world"
     }
   }
