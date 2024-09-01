@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CreateStatusDto } from "./dto/create-status.dtos";
-import { PrismaService } from "src/prisma/prisma.service";
 import { STATUS_MESSAGE } from "./status.constants";
+import { PrismaService } from "@/prisma/prisma.service";
 
 @Injectable()
 export class StatusService {
@@ -17,13 +17,5 @@ export class StatusService {
         message: createStatusInput.message,
       },
     });
-  }
-
-  findAll() {
-    return this.prismaService.status.findMany();
-  }
-
-  findOne(id: number) {
-    return this.prismaService.status.findUnique({ where: { id } });
   }
 }

@@ -3,8 +3,8 @@ import { ObjectType, Field, Int } from "@nestjs/graphql";
 @ObjectType()
 export class Status {
   @Field(() => Int)
-  id: number;
+  id!: number;
 
   @Field(() => String)
-  message: string;
+  message!: string;
 }

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from "@nestjs/graphql";
+import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { StatusService } from "./status.service";
 import { Status } from "./entities/status.entity";
 import { CreateStatusDto } from "./dto/create-status.dtos";
@@ -7,7 +7,7 @@ import { CreateStatusDto } from "./dto/create-status.dtos";
 export class StatusResolver {
   constructor(private readonly statusService: StatusService) {}
 
-  @Query(() => String, { name: "healthCheck" })
+  @Query(() => String, { name: "status" })
   status() {
     return this.statusService.status();
   }
@@ -15,15 +15,5 @@ export class StatusResolver {
   @Mutation(() => Status)
   createStatus(@Args("createStatusDto") createStatusDto: CreateStatusDto) {
     return this.statusService.create(createStatusDto);
-  }
-
-  @Query(() => [Status], { name: "allStatus" })
-  findAll() {
-    return this.statusService.findAll();
-  }
-
-  @Query(() => Status, { name: "status" })
-  findOne(@Args("id", { type: () => Int }) id: number) {
-    return this.statusService.findOne(id);
   }
 }
