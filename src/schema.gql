@@ -2,19 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Status {
-  id: Int!
-  message: String!
-}
-
 type Query {
   status: String!
-}
-
-type Mutation {
-  createStatus(createStatusDto: CreateStatusDto!): Status!
-}
-
-input CreateStatusDto {
-  message: String!
 }

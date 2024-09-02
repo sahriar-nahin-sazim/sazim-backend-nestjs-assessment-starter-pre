@@ -3,7 +3,7 @@ import { PrismaModule } from "./prisma/prisma.module";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { join } from "path";
-import { StatusModule } from './status/status.module';
+import { StatusModule } from "./status/status.module";
 
 @Module({
   imports: [

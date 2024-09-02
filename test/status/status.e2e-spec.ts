@@ -37,43 +37,4 @@ describe("StatusResolver (e2e)", () => {
         });
     });
   });
-
-  describe("createStatus", () => {
-    const mutation = `
-        mutation CreateStatus($createStatusDto: CreateStatusDto!) {
-          createStatus(createStatusDto: $createStatusDto) {
-            id
-            message
-          }
-        }
-      `;
-    it("should return OK(200) with newly created status", async () => {
-      const createStatusDto = { message: "Hello world" };
-
-      return request(app.getHttpServer())
-        .post("/graphql")
-        .send({
-          query: mutation,
-          variables: { createStatusDto },
-        })
-        .expect(HttpStatus.OK)
-        .expect(({ body: { data } }) => {
-          expect(data.createStatus).toBeDefined();
-          expect(data.createStatus.id).toBeGreaterThan(0);
-          expect(data.createStatus.message).toBe(createStatusDto.message);
-        });
-    });
-
-    it("should return OK(200) with error if appropriate createStatusDto is not passed", async () => {
-      return request(app.getHttpServer())
-        .post("/graphql")
-        .send({
-          query: mutation,
-        })
-        .expect(HttpStatus.OK)
-        .expect(({ body: { errors } }) => {
-          expect(errors).toBeDefined();
-        });
-    });
-  });
 });
