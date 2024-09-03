@@ -2,6 +2,21 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Query {
+type HealthCheckResultObject {
   status: String!
+  info: GraphQLHealthIndicatorObject
+  error: GraphQLHealthIndicatorObject
+  details: GraphQLHealthIndicatorObject!
+}
+
+type GraphQLHealthIndicatorResult {
+  status: String!
+}
+
+type GraphQLHealthIndicatorObject {
+  database: GraphQLHealthIndicatorResult!
+}
+
+type Query {
+  status: HealthCheckResultObject!
 }

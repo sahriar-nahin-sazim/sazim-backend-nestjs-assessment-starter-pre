@@ -1,20 +1,17 @@
-import { PrismaService } from "@/prisma/prisma.service";
 import { HttpStatus, INestApplication } from "@nestjs/common";
 import request from "supertest";
 import { THttpServer } from "../utils/types";
 import { bootstrapTestServer } from "../utils/bootstrap";
-import { STATUS_MESSAGE } from "@/status/status.constants";
+import { getExpectedStatusStructure } from "./status.expected-structure";
 
 describe("StatusResolver (e2e)", () => {
   let app: INestApplication;
-  let dbService: PrismaService;
   let httpServer: THttpServer;
 
   beforeAll(async () => {
-    const { appInstance, dbServiceInstance, httpServerInstance } = await bootstrapTestServer();
+    const { appInstance, httpServerInstance } = await bootstrapTestServer();
 
     app = appInstance;
-    dbService = dbServiceInstance;
     httpServer = httpServerInstance;
   });
 
@@ -22,18 +19,32 @@ describe("StatusResolver (e2e)", () => {
     await app.close();
   });
 
-  beforeEach(async () => {
-    await dbService.clearDB();
-  });
-
   describe("status", () => {
-    it("should return OK(200) with welcome message", async () => {
+    it("should return OK(200) with expected structure", async () => {
       return request(httpServer)
         .post("/graphql")
-        .send({ query: "{ status }" })
+        .send({
+          query: `
+            query {
+              status {
+                status
+                info {
+                  database {
+                    status
+                  }
+                }
+                details {
+                  database {
+                    status
+                  }
+                }
+              }
+            }
+          `,
+        })
         .expect(HttpStatus.OK)
         .expect(({ body }) => {
-          expect(body.data.status).toEqual(STATUS_MESSAGE);
+          expect(body.data).toEqual(getExpectedStatusStructure());
         });
     });
   });

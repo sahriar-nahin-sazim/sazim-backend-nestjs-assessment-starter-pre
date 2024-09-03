@@ -41,7 +41,7 @@ yarn run db:push:test
 
 ### 5. **Run Tests**
 
-Running the following command should show `1 passed` Test Suites and `3 passed` Tests
+Running the following command should show `1 passed` *Test Suites* and `1 passed` *Tests* if things are setup properly
 
 ```bash
 yarn run test:e2e
@@ -62,42 +62,31 @@ yarn run start:dev
 
 This will have GraphQl playground running at `http://localhost:<<PORT>>/graphql`. (For `PORT=3000` it should be running at http://localhost:3000/graphql)
 
-- You can test endpoint with following query
+- You can test endpoint with following health check query
 
 ```bash
 # Query
-{status}
-
-# response after execution
-{
-  "data": {
-    "status": "Welcome from SAZIM"
-  }
-}
-```
-
-- And to ensure database is setup properly with the following mutation:
-
-```bash
-mutation CreateStatus($createStatusDto: CreateStatusDto!) {
-  createStatus(createStatusDto: $createStatusDto) {
-    id
-    message
-  }
-}
-# variable
-{ 
-    "createStatusDto" : { 
-        "message": "Hello world" 
+query {
+  status {
+    status
+    details {
+      database {
+        status
+      }
     }
+  }
 }
 
-# response after execution
+# expected response after execution
 {
   "data": {
-    "createStatus": {
-      "id": 1,
-      "message": "Hello world"
+    "status": {
+      "status": "ok",
+      "details": {
+        "database": {
+          "status": "up"
+        }
+      }
     }
   }
 }

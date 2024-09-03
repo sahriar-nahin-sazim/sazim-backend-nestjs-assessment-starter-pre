@@ -1,11 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { STATUS_MESSAGE } from "./status.constants";
+import { HealthCheckService, PrismaHealthIndicator } from "@nestjs/terminus";
+import { PrismaService } from "@/prisma/prisma.service";
 
 @Injectable()
 export class StatusService {
-  constructor() {}
+  constructor(
+    private readonly health: HealthCheckService,
+    private readonly prismaIndicator: PrismaHealthIndicator,
+    private readonly prisma: PrismaService,
+  ) {}
 
   status() {
-    return STATUS_MESSAGE;
+    return this.health.check([() => this.prismaIndicator.pingCheck("database", this.prisma)]);
   }
 }
