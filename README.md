@@ -23,10 +23,9 @@ yarn install
 
 ### 3. **Environment Variables**
  The `DATABASE_URL` variable for Prisma setup is taken from environment variable. So you will need the following files:
-    - `.env` file for development
-    - `env.test.local` for testing
-
-    You can refer to [`.env.example`](.env.example) file for example values. 
+  - `.env` file for development
+  - `env.test.local` for testing
+You can refer to [`.env.example`](.env.example) file for example values. 
     
 **NOTE**: The [`.env.example`](.env.example)  and [`schema.prisma`](prisma/schema.prisma) are configured for [Postgresql](https://www.postgresql.org/).  If you're using a different database, you'll need to update both files accordingly.
 
