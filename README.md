@@ -1,85 +1,101 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Sazim Backend Assessment
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Welcome to the Sazim backend assessment starter code. This starter project [NestJS](https://github.com/nestjs/nest)-GraphQL, [Prisma](https://www.prisma.io/) with the power of [Typescript](https://www.typescriptlang.org/). The following steps should get anyone up and running with the project:
 
-## Project setup
-
+### 1. **Clone the repository**
 ```bash
-$ yarn install
+git clone https://github.com/SazimAssessments/sazim-backend-nestjs-assessment-starter.git # <put_folder_name>
+```
+### 2. **Project setup** 
+
+Make sure you have `yarn` installed and you are using at lease Node `version 20`.  If you have nvm installed, you can activate the correct Node version with the following command: 
+```
+nvm use
 ```
 
-## Compile and run the project
+Next, install the dependencies.
+
+```bash
+yarn install
+```
+
+### 3. **Environment Variables**
+ The `DATABASE_URL` variable for Prisma setup is taken from environment variable. So you will need the following files:
+  - `.env` file for development
+  - `env.test.local` for testing
+You can refer to [`.env.example`](.env.example) file for example values. 
+    
+**NOTE**: The [`.env.example`](.env.example)  and [`schema.prisma`](prisma/schema.prisma) are configured for [Postgresql](https://www.postgresql.org/).  If you're using a different database, you'll need to update both files accordingly.
+
+### 4. **Setup database**
+
+Once `DATABASE_URL` setup is done in the .env, run the following commands:
+```bash
+yarn run db:generate:client # or, # npx prisma generate
+yarn run db:push:dev # or, # prisma db push
+yarn run db:push:test 
+```
+
+### 5. **Run Tests**
+
+Running the following command should show `1 passed` *Test Suites* and `1 passed` *Tests* if things are setup properly
+
+```bash
+yarn run test:e2e
+```
+
+
+### 6. **Compile and run the project**
+
+To start the project, use one of the following commands:
 
 ```bash
 # development
-$ yarn run start
+yarn run start
 
 # watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+yarn run start:dev
 ```
 
-## Run tests
+This will have GraphQl playground running at `http://localhost:<<PORT>>/graphql`. (For `PORT=3000` it should be running at http://localhost:3000/graphql)
+
+- You can test endpoint with following health check query
 
 ```bash
-# unit tests
-$ yarn run test
+# Query
+query {
+  status {
+    status
+    details {
+      database {
+        status
+      }
+    }
+  }
+}
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+# expected response after execution
+{
+  "data": {
+    "status": {
+      "status": "ok",
+      "details": {
+        "database": {
+          "status": "up"
+        }
+      }
+    }
+  }
+}
 ```
 
-## Resources
 
-Check out a few resources that may come in handy when working with NestJS:
+### 7. Other
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- To use NestJS cli
+```bash
+# yarn
+yarn add -g @nestjs/cli
+```

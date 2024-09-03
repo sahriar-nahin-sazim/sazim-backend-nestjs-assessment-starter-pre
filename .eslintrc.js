@@ -1,25 +1,65 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: 'tsconfig.json',
-    tsconfigRootDir: __dirname,
-    sourceType: 'module',
-  },
-  plugins: ['@typescript-eslint/eslint-plugin'],
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
-  root: true,
   env: {
-    node: true,
     jest: true,
+    node: true,
   },
-  ignorePatterns: ['.eslintrc.js'],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+  ],
+  overrides: [
+    {
+      env: {
+        jest: true,
+      },
+      files: ["**/*.spec.ts", "**/*.test.ts"],
+    },
+  ],
+  ignorePatterns: [".eslintrc"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: "tsconfig.json",
+    sourceType: "module",
+  },
+  plugins: ["@typescript-eslint/eslint-plugin", "eslint-plugin-import-helpers"],
+  root: true,
   rules: {
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    "arrow-body-style": ["warn", "as-needed"],
+    eqeqeq: ["warn", "always"],
+    "linebreak-style": ["warn", "unix"],
+    "eol-last": ["warn", "always"],
+    "no-restricted-imports": [
+      "warn",
+      {
+        patterns: ["../../../*", "!../*", "!../../*", "!test/**/*"],
+      },
+    ],
+    "no-const-assign": "warn",
+    "no-lone-blocks": "warn",
+    "no-return-await": "warn",
+    "no-trailing-spaces": "warn",
+    "no-throw-literal": "warn",
+    "no-unused-expressions": "warn",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+      },
+    ],
+    "no-useless-catch": "warn",
+    "no-useless-escape": "warn",
+    "no-useless-return": "warn",
+    "no-unneeded-ternary": "warn",
+    "no-unreachable": "warn",
+    "no-var": "warn",
+    "prefer-const": "warn",
+    quotes: ["off", "double"],
+    "require-await": "warn",
+    semi: ["warn", "always"],
+    "spaced-comment": ["warn", "always", { exceptions: ["-", "+"] }],
   },
 };
